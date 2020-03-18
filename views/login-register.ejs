@@ -53,6 +53,18 @@ a {
 	margin: 15px 0;
 }
 
+link_button{
+	border-radius: 20px;
+	border: 1px solid #901abee5;
+	background-color: #901abee5;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
 button {
 	border-radius: 20px;
 	border: 1px solid #901abee5;
@@ -265,7 +277,7 @@ footer a {
 
 	<% if (locals.register_error) { %>
 
-		<p style="color:white;font-size:18px; font-weight: 800;"><%= register_error[0].msg %></p>
+		<p style="color:white;font-size:18px; font-weight: 800;"><Please fill in the fields.></p>
 	
 	<% } %>
 	<% if (locals.created) { %>
@@ -352,15 +364,15 @@ footer a {
 			
 			<% } %>
 			<br />
-			
 			<% if(locals.register_error){ %>
 				<button id="signup_error">Sign Up</button>
 			<%} else{ %>
 			   <button>Sign Up</button>
 			<% } %>
+			
 		</form>
 	</div>
-	<% if(!locals.register_error) { %> 
+<!---	<% if(!locals.register_error) { %> -->
 		<div class="form-container sign-in-container">
 			<form action="/login" method="POST">
 				<h1>Sign in</h1>
@@ -377,7 +389,7 @@ footer a {
 			</form>
 		</div>
 
-	<%} %>
+ <!----  <%} %>   -->
 	
 	<div class="overlay-container">
 		<div class="overlay">
@@ -385,7 +397,21 @@ footer a {
 				<h2>Student</h2>
 				<h1>Welcome Back!</h1>
 				<p>Already have an account? Then Sign in your account</p>
-				<button class="ghost" id="signIn">Sign In</button>
+				<a href="/student/" style="
+				font-size: 12px;
+				font-weight: bold;
+				padding: 12px 45px;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+				border: 2px solid white;
+				border-radius: 20px;
+				color:whitesmoke;
+				">Sign in</a>
+
+				
+
+
+				
 			</div>
 			<div class="overlay-panel overlay-right">
 				<h2>Student</h2>
@@ -416,9 +442,12 @@ const signup_error = document.getElementById('signup_error');
 	
 })*/
 if(signup_error){
-	container.classList.remove("right-panel-active");
+	//container.classList.remove("right-panel-active");
 	container.classList.add("right-panel-active");
 }
+/*if(singin_error){
+	container.classList.remove("right-panel-active");
+}*/
 signUpButton.addEventListener('click', () => {
 	 
 		container.classList.add("right-panel-active");
