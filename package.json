@@ -1,0 +1,29 @@
+{
+  "name": "benefactor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anika107/Benefactor.git"
+  },
+  "author": "Anika Tahsin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anika107/Benefactor/issues"
+  },
+  "homepage": "https://github.com/anika107/Benefactor#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "cookie-session": "^1.4.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.4.0",
+    "mysql2": "^2.1.0",
+    "password-hash": "^1.2.2"
+  }
+}
