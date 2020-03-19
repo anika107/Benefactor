@@ -1,32 +1,33 @@
 const express = require('express');
 const path = require('path');
-const session = require('express-session');
+const session = require('./session');
 const db = require('./database')
-const st = require('./student/register');
+const student_register = require('./student/register');
+const student_login = require('./student/login');
 const bp = require('body-parser');
 const hash = require('password-hash');
 const { check, validationResult } = require('express-validator');
 
 const app = express();
-app.use(st);
+app.use(student_login);
+app.use(student_register);
 app.use(bp.urlencoded({extended:true}));
 app.use(express.static('public'));
-app.use(express.static('student/register.js'));
 
-
+app.use(session);
 
 
 app.set('view engine','ejs');
 app.use(bp.json());
 
 // APPLY COOKIE SESSION MIDDLEWARE
-app.use(session({
+/*app.use(session({
     secret: 'anonymous',
     resave: true,
     saveUninitialized: true,
     user: null
  
-}));
+})); */
 
 
 app.get('/',(req, res)=>{
@@ -47,4 +48,4 @@ app.get('/',(req, res)=>{
 // END OF LOGOUT
 
 
-app.listen(4005, () => console.log("Server is Running..."));
+app.listen(3000, () => console.log("Server is Running..."));

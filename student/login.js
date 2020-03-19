@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const session = require('express-session');
+const session = require('../session');
 const db = require('../database');
 const bp = require('body-parser');
 const hash = require('password-hash');
@@ -14,8 +14,11 @@ app.use(express.static('public'));
 app.set('view engine','ejs');
 app.use(bp.json());
 
+app.use(session);
+
+
 //if(req.session.user == "student"){
-    app.post('/login',[
+    app.post('/student-dashboard',[
         check('username', 'The username field is empty.').not().isEmpty().custom((value) =>{
             return db.execute('select username from student where username = ?', [value]).then(([rows]) =>{
             if(rows.length == 1){
@@ -25,7 +28,8 @@ app.use(bp.json());
             
             return Promise.reject('The username does not exists.')
         })
-    })
+        check('password', 'The password field is empty').not().isEmpty();
+   })
     
 
 ], (req, res)=>{
@@ -33,31 +37,35 @@ app.use(bp.json());
          const result = validationResult(req);
          const username = req.body.username;
          const password = req.body.password;
-         console.log(username)
+         console.log(username);
          console.log(password);
 
          //const {username, password} = req.body;
-        // if(result.isEmpty()){
+         if(result.isEmpty()){
              db.execute('select password from student where username = ?',[username]).then(([rows]) =>{
                  var hash_pass = hash.generate(password);
                  console.log(hash_pass);
                  console.log(rows[0].password);
                  if(hash.verify(password, rows[0].password)){
-                    // req.session.username = username;
+                     req.session.username = username;
                      res.render('student-dashboard');
 
                  }
                  else{
-                     res.render('login-register', {
+                     res.redirect('/student-signin-signup');
+                     /*res.render('login-register', {
                          login_error: 'Invalid password'
-                     })
+                     })*/
                      
                  }
              }) 
          }
-         /*else{
-            var err = result.errors;
-            console.log(err);
+         else{
+           // var err = result.errors;
+          //  console.log(err);
+            res.redirect('/student-signin-signup');
+         }
+        }
            // reg_log = false;
             
            /* for (var key in err) {
@@ -79,4 +87,5 @@ app.use(bp.json());
 //}
 */
     )
+
 module.exports = app;

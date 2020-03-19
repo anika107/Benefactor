@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const session = require('express-session');
+const session = require('../session');
 const db = require('../database');
 const bp = require('body-parser');
 const hash = require('password-hash');
@@ -14,45 +14,48 @@ app.use(express.static('public'));
 app.set('view engine','ejs');
 app.use(bp.json());
 
+app.use(session);
 
-app.use(session({
+/*app.use(session({
     secret: 'anonymous',
     resave: true,
     saveUninitialized: true,
-    user: null
+   // user: null
  
-}));
+}));*/ 
 
 
 app.get('/',(req, res)=>{
     if(req.session.user){
-       req.session.destroy();
+      // req.session.destroy();
+      res.redirect('/student-dashboard');
     }
     res.render('home')
 })
 
-app.get('/student', (req, res)=>{
-    req.session.user = "student";
-    console.log(req.session.user);
-    res.render('studentac');
+app.get('/student-signin-signup', (req, res)=>{
+    if(req.session.username){
+        console.log(req.session.username);
+        res.redirect('/student-dashboard');
+    }
+    else{
+        req.session.user = "student";
+         console.log(req.session.user);
+         res.render('login-register');
+    }
 })
 
 app.get('/employer', (req, res)=>{
     req.session.user = "employer";
     console.log(req.session.user);
-    res.render('studentac');
+    res.render('login-register');
 })
 
-app.post('/login', (req, res)=>{
-    console.log(req.body);
-    var data = {
-        email: req.body.email,
-        pw: req.body.pw
-    }
-   
-    res.render('student-dashboard')
-})
+
+
+
 app.post('/register', [
+  
     check('user_email', 'The email address is invalid.').isEmail().custom((value) => {
         return db.execute('select email from student where email = ?', [value]).then(([rows]) => {
             if(rows.length > 0){
@@ -76,6 +79,7 @@ app.post('/register', [
 ], (req, res)=>{
     const errors = validationResult(req);
     console.log(req.body);
+    req.session.reg_log = false;
 
   /* const {user_first, user_last, user_name, user_pass, user_email} = 
         {req.body.first_name, req.body.last_name, req.body.user_name, req.body.user_pass, req.body.user_email};*/
@@ -88,12 +92,13 @@ app.post('/register', [
     if(errors.isEmpty()){
        // bcrypt.hash(user_pass, 12).then((hash_pass) => {
             // INSERTING USER INTO DATABASE
+            req.session.reg_log = true;
             hash_pass = hash.generate(user_pass);
             db.execute("insert into `student`(`username`,`email`,`password`, firstname, lastname) VALUES(?,?,?, ?, ?)",
             [user_name,user_email, hash_pass, user_first, user_last ])
             .then(result => {
                 msg = `your account has been created successfully`;
-                res.render('studentac', {
+                res.render('login-register', {
                     created: msg
                 });
             }).catch(err => {
@@ -108,14 +113,17 @@ app.post('/register', [
        const result= validationResult(req);
        var err = result.errors;
        console.log(err);
+       reg_log = false;
        
       /* for (var key in err) {
            console.log(err[key].msg);
        }*/
      //  console.log(allErrors)
-        res.render('studentac',{
+        res.render('login-register',{
             register_error:err,
-            old_data:req.body
+            old_data:req.body,
+            reg_log: reg_log
+
         });
     }
 
