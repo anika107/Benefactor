@@ -16,31 +16,36 @@ app.use(bp.json());
 
 app.use(session);
 
+app.get('/student-dashboard', (req,res) =>{
+  console.log(req.session);
+    if(req.session.user){
+        res.render('student-dashboard');
+    }
+    else{
+        res.redirect('/');
+    }
+    
+})
 
-//if(req.session.user == "student"){
-    app.post('/student-dashboard',[
-        check('username', 'The username field is empty.').not().isEmpty().custom((value) =>{
-            return db.execute('select username from student where username = ?', [value]).then(([rows]) =>{
-            if(rows.length == 1){
-               return true;
-            }
-           
-            
-            return Promise.reject('The username does not exists.')
-        })
-        check('password', 'The password field is empty').not().isEmpty();
-   })
+app.post('/login',[
+    check('username', 'The username field is empty.').not().isEmpty().custom((value) =>{
+        return db.execute('select username from student where username = ?', [value]).then(([rows]) =>{
+         if(rows.length == 1){
+           return true;
+        } 
+        return Promise.reject('The username does not exists.')
+    })     
+    check('password', 'The password field is empty').not().isEmpty();
+    })
     
 
-], (req, res)=>{
+    ], (req, res)=>{
         console.log(req.body);
          const result = validationResult(req);
          const username = req.body.username;
          const password = req.body.password;
          console.log(username);
          console.log(password);
-
-         //const {username, password} = req.body;
          if(result.isEmpty()){
              db.execute('select password from student where username = ?',[username]).then(([rows]) =>{
                  var hash_pass = hash.generate(password);
@@ -48,44 +53,26 @@ app.use(session);
                  console.log(rows[0].password);
                  if(hash.verify(password, rows[0].password)){
                      req.session.username = username;
-                     res.render('student-dashboard');
+                    
+                     req.session.user = "student";
+                     res.redirect('/student-dashboard');
 
                  }
                  else{
                      res.redirect('/student-signin-signup');
                      /*res.render('login-register', {
-                         login_error: 'Invalid password'
+                         login_error: 'Invalid password'n
                      })*/
                      
                  }
              }) 
          }
          else{
-           // var err = result.errors;
-          //  console.log(err);
             res.redirect('/student-signin-signup');
          }
-        }
-           // reg_log = false;
-            
-           /* for (var key in err) {
-                console.log(err[key].msg);
-            }*/
-          //  console.log(allErrors)
-           /*  res.render('login-register',{
-                 login_error:err,
-                 old_data:req.body,
-               
-     
-             });
-         }
-       
-   
-        //  res.render('student-dashboard')
-    })
-
-//}
-*/
-    )
+        
+    }
+    
+ )
 
 module.exports = app;
