@@ -60,3 +60,5 @@ CREATE TABLE `job_catagory` (
     `job_name` VARCHAR(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL ,
     PRIMARY KEY (`job_id`)
      ) ENGINE = InnoDB;
+
+ALTER TABLE `student` ADD `pic` LONGBLOB NOT NULL AFTER `cv`
