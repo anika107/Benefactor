@@ -37,7 +37,7 @@ ALTER TABLE
     ADD `job_cata3` INT NOT NULL AFTER `job_cata2`,
     ADD `job_cata4` INT NOT NULL AFTER `job_cata3`,
     ADD `e_salary1` INT NOT NULL AFTER `job_cata4`,
-    ADD `e_satary2` INT NOT NULL AFTER `e_salary1`,
+    ADD `e_salary2` INT NOT NULL AFTER `e_salary1`,
     ADD `cv` LONGBLOB NOT NULL AFTER `e_satary2`;
 
 CREATE TABLE `location`(
