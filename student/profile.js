@@ -20,5 +20,18 @@ app.get('/student-profile', (req, res)=>{
     res.render('student_profile');
 })
 
+app.get('/update-profile', (req, res)=>{
+    res.render('update_profile');
+})
+
+app.post('/update', (req,res)=>{
+    if(req.body.firstname){
+        db.execute("update student set firstname = ? where username = ?",
+        [req.body.firstname,req.session.username ]);
+    }
+    res.redirect('/update-profile');
+    
+})
+
 module.exports = app;
 
