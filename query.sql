@@ -3,3 +3,16 @@ ALTER TABLE `student` ADD `username` VARCHAR(10) NOT NULL AFTER `email`, ADD `fi
 ALTER TABLE `student` ADD `email` VARCHAR(20) NOT NULL AFTER `password`;
 
 ALTER TABLE `student` CHANGE `password` `password` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+
+ALTER TABLE `student` ADD FOREIGN KEY (`location_id`) REFERENCES `location`(`location_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+ALTER TABLE `student` ADD  FOREIGN KEY (`job_cata1`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`job_cata2`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`job_cata3`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`job_cata4`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`region1`) REFERENCES `region`(`region_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`region2`) REFERENCES `region`(`region_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`region3`) REFERENCES `region`(`region_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `student` ADD  FOREIGN KEY (`region4`) REFERENCES `region`(`region_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
