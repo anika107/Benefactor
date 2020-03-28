@@ -72,10 +72,9 @@ ALTER TABLE `student` ADD FOREIGN KEY (`region4`) REFERENCES `region`(`region_id
 
 ALTER TABLE `student` ADD FOREIGN KEY (`job_cata1`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `student` ADD FOREIGN KEY (`job_cata2`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `student` ADD FOREIGN KEY (`job_cata3`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `student` ADD FOREIGN KEY (`job_cata4`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE`employer` 
-    ADD `location_id` INT NOT NULL AFTER `gender`,
-    ADD `phone_no` VARCHAR(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `location_id`,
-    ADD `website` VARCHAR(30) NOT NULL AFTER `location_id`,
-    ADD `pic` LONGBLOB NOT NULL AFTER `website`;
+ALTER TABLE `employer` ADD `location_id` INT NOT NULL AFTER `password`, ADD `website` VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `location_id`, ADD `position` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `website`, ADD `pic` LONGBLOB NOT NULL AFTER `position`;
 
 ALTER TABLE `employer` ADD FOREIGN KEY (`location_id`) REFERENCES `location`(`location_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `benefactor`.`circular` ( `circular_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `employer_username` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `whatAreYouGoingToDo` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `whatWeOffer` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `whatWeAsk` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `status` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `location_id` INT NULL DEFAULT NULL , `workHour` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `Education` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL , `Salary` INT NULL DEFAULT NULL , `job_id` INT NULL DEFAULT NULL , `PublishedAt` DATE NULL DEFAULT NULL ,  `expireAt` DATE NULL DEFAULT NULL PRIMARY KEY (`circular_id`)) ENGINE = InnoDB;
+
