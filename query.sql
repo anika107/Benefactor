@@ -20,8 +20,8 @@ ALTER TABLE `employer`  ADD PRIMARY KEY (`username`)
 
 ALTER TABLE `employer` CHANGE `password` `password` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
 
-ALTER TABLE
-    `student` ADD `gender` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `password`,
+ALTER TABLE`student` 
+    ADD `gender` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `password`,
     ADD `location_id` INT NOT NULL AFTER `gender`,
     ADD `phone_no` VARCHAR(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `location_id`,
     ADD `dob` DATE NOT NULL AFTER `phone_no`,
@@ -71,3 +71,11 @@ ALTER TABLE `student` ADD FOREIGN KEY (`region3`) REFERENCES `region`(`region_id
 ALTER TABLE `student` ADD FOREIGN KEY (`region4`) REFERENCES `region`(`region_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `student` ADD FOREIGN KEY (`job_cata1`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `student` ADD FOREIGN KEY (`job_cata2`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `student` ADD FOREIGN KEY (`job_cata3`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `student` ADD FOREIGN KEY (`job_cata4`) REFERENCES `job_catagory`(`job_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE`employer` 
+    ADD `location_id` INT NOT NULL AFTER `gender`,
+    ADD `phone_no` VARCHAR(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `location_id`,
+    ADD `website` VARCHAR(30) NOT NULL AFTER `location_id`,
+    ADD `pic` LONGBLOB NOT NULL AFTER `website`;
+
+ALTER TABLE `employer` ADD FOREIGN KEY (`location_id`) REFERENCES `location`(`location_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
