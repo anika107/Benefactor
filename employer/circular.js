@@ -19,7 +19,9 @@ app.use(session);
 app.get('/single-job-post', (req, res) =>{
     db.execute('select * from circular join location where circular_id = ? and location.location_id = circular.location_id', [req.session.circular_id]).then(([cir]) =>{
         db.execute('select * from circular_employer join employer where employer_username = username and username = ? and circular_id = ?', [req.session.username, req.session.circular_id]).then(([em]) =>{
-            
+            db.execute('select * from circular join job_catagory where circular_id = ? and circular.job_id = job_catagory.job_id',[req.session.circular_id]).then(([job]) =>{
+                
+            })
         })
     })
     
