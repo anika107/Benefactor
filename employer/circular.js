@@ -21,7 +21,7 @@ app.get('/single-job-post', (req, res) =>{
         db.execute('select * from circular_employer join employer where employer_username = username and username = ? and circular_id = ?', [req.session.username, req.session.circular_id]).then(([em]) =>{
             db.execute('select * from circular join job_catagory where circular_id = ? and circular.job_id = job_catagory.job_id',[req.session.circular_id]).then(([job]) =>{
                 [req.session.username]).then(([rows]) =>{
-                    res.render('circular',{
+                    res.render('one_circular',{
                         firstname = em[0].firstname,
                         lastname = em[0].lastname,
                         companyname = em[0].companyname,
@@ -50,6 +50,16 @@ app.get('/single-job-post', (req, res) =>{
     
 })
 
+app.get('employer-all-post',(req, res)=>{
+    db.execute('select * from circular_employer join circular where circular_employer.circular_id = circular.circular_id and employer_usernme = ?' [req.session.employer_username]).then(([cir]) =>{
+        db.execute('select * from employer where username = ?' [req.session.username]).then(([emp]) =>{
+            res.render('all_circular'{
+                circular: cir,
+                emp_info: emp
+            })
+        })
+    })
+})
 
 
 
